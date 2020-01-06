@@ -1,9 +1,13 @@
+
 package guru.springframework.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Created by jt on 6/13/17.
+ */
 @Entity
 public class Recipe {
 
@@ -21,7 +25,6 @@ public class Recipe {
     @Lob
     private String directions;
 
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
@@ -36,98 +39,94 @@ public class Recipe {
 
     @ManyToMany
     @JoinTable(name = "recipe_category",
-    joinColumns = @JoinColumn(name = "recipe_id"),
+            joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
-
 
     public Long getId() {
         return id;
     }
 
-    public Recipe setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public Recipe setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        return this;
     }
 
     public Integer getPrepTime() {
         return prepTime;
     }
 
-    public Recipe setPrepTime(Integer prepTime) {
+    public void setPrepTime(Integer prepTime) {
         this.prepTime = prepTime;
-        return this;
     }
 
     public Integer getCookTime() {
         return cookTime;
     }
 
-    public Recipe setCookTime(Integer cookTime) {
+    public void setCookTime(Integer cookTime) {
         this.cookTime = cookTime;
-        return this;
     }
 
     public Integer getServings() {
         return servings;
     }
 
-    public Recipe setServings(Integer servings) {
+    public void setServings(Integer servings) {
         this.servings = servings;
-        return this;
     }
 
     public String getSource() {
         return source;
     }
 
-    public Recipe setSource(String source) {
+    public void setSource(String source) {
         this.source = source;
-        return this;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public Recipe setUrl(String url) {
+    public void setUrl(String url) {
         this.url = url;
-        return this;
     }
 
     public String getDirections() {
         return directions;
     }
 
-    public Recipe setDirections(String directions) {
+    public void setDirections(String directions) {
         this.directions = directions;
-        return this;
     }
 
     public Byte[] getImage() {
         return image;
     }
 
-    public Recipe setImage(Byte[] image) {
+    public void setImage(Byte[] image) {
         this.image = image;
-        return this;
     }
 
     public Notes getNotes() {
         return notes;
     }
 
-    public Recipe setNotes(Notes notes) {
+    public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
+    }
+
+    public Recipe addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
         return this;
     }
 
@@ -135,26 +134,23 @@ public class Recipe {
         return ingredients;
     }
 
-    public Recipe setIngredients(Set<Ingredient> ingredients) {
+    public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
-        return this;
     }
 
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public Recipe setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
-        return this;
     }
 
     public Set<Category> getCategories() {
         return categories;
     }
 
-    public Recipe setCategories(Set<Category> categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
-        return this;
     }
 }
